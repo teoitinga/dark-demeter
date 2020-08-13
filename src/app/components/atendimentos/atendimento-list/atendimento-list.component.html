@@ -1,1 +1,27 @@
-<p>atendimento-list works!</p>
+<section class="grey-text w-responsive mx-auto p-5">
+  <h2 class="h4 mb-4 text-center font-weight-bold">
+    Lista de atendimentos
+  </h2>
+  <table class="table table-striped">
+    <thead>
+
+      <tr>
+        <th class="hidden">ID</th>
+        <th>Nome do produtor</th>
+        <th>Data do Atendimento</th>
+        <th>Descrição do atendimento</th>
+        <th>Valor do serviço</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr *ngFor="let atd of atendimentos">
+        <td class="hidden">{{atd.id}}</td>
+        <td>{{atd.produtor}}</td>
+        <td>{{atd.dataDoAtendimento}}</td>
+        <td>{{atd.descricaoDoServico}}</td>
+        <td>{{atd.valorServico}}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
