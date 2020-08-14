@@ -14,12 +14,14 @@ import * as AppUtils from '../shared/app.utils';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { MessageService } from './message.service';
 
 @Injectable()
 export class InterceptorService implements HttpInterceptor {
 
   constructor(
     private apiService: ApiService,
+    private messageService: MessageService
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -42,6 +44,12 @@ export class InterceptorService implements HttpInterceptor {
   private handleError(error: HttpErrorResponse) {
 
     return throwError(error);
+
+  }
+  handleErroGeneral(error){
+    
+  }
+  handleError303(error){
 
   }
 }

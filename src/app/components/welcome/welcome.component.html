@@ -75,7 +75,12 @@
                     <label for="password">Senha</label>
                   </div>
                   <div class="text-center mt-4">
-                    <button class="btn btn-indigo btn-rounded white-text waves-light" >acessar</button>
+                    <button class="btn btn-indigo btn-rounded white-text waves-light" *ngIf="!submitted">
+                      acessar
+                    </button>
+                    <button class="btn btn-dark btn-rounded btn-block white-text waves-light" *ngIf="submitted">
+                      <span class="spinner-border spinner-border-sm"></span>Carregando...
+                    </button>
                     <hr class="hr-light mb-3 mt-4">
                   </div>
                 </div>
