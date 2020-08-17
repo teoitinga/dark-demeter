@@ -16,24 +16,28 @@ export class CabecalhoComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  get usuario():BehaviorSubject<UsuarioModel>{
+  get usuario(): BehaviorSubject<UsuarioModel> {
     return this.apiservice.usuario;
   }
-  logout(){
-    console.log('fazendo logout');
+  logout() {
     this.apiservice.logout();
   }
-  get roleadmin(): Observable<boolean>{
+  get roleadmin(): Observable<boolean> {
     return new Observable<boolean>(observer => {
       observer.next(this.apiservice.roleadmin);
     });
 
   }
-  get roletecnico(): Observable<boolean>{
+  get roletecnico(): Observable<boolean> {
     return new Observable<boolean>(observer => {
       observer.next(this.apiservice.roletecnico);
     });
 
   }
+  get rolecedido(): Observable<boolean> {
+    return new Observable<boolean>(observer => {
+      observer.next(this.apiservice.rolecedido);
+    });
 
+  }
 }

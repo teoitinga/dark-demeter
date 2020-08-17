@@ -1,5 +1,5 @@
 <!--Navbar-->
-<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark indigo" *ngIf="roletecnico | async">
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark indigo" *ngIf="(roletecnico  | async) || (rolecedido | async)">
 
   <mdb-navbar-brand>
     <a class="navbar-brand" href="#">

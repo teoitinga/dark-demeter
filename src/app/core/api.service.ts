@@ -58,7 +58,7 @@ export class ApiService {
   }
   get roleadmin():boolean{
     try{
-      console.log("role: "+this.jwtDecode(this.getAccessToken()).role);
+
       return this.jwtDecode(this.getAccessToken()).role === 'ADMIN'? true : false
     }catch(err){
       return false;
@@ -66,8 +66,16 @@ export class ApiService {
   }
   get roletecnico():boolean{
     try{
-      console.log("role: "+this.jwtDecode(this.getAccessToken()).role);
+
       return this.jwtDecode(this.getAccessToken()).role === 'TECNICO'? true : false
+    }catch(err){
+      return false;
+    }
+  }
+
+  get rolecedido():boolean{
+    try{
+      return this.jwtDecode(this.getAccessToken()).role === 'CEDIDO'? true : false
     }catch(err){
       return false;
     }
