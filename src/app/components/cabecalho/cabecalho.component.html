@@ -1,52 +1,50 @@
 <!--Navbar-->
-<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark indigo">
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark indigo" *ngIf="roletecnico | async">
 
-    <mdb-navbar-brand>
-      <a class="navbar-brand" href="#">
-        <img src="https://mdbootstrap.com/img/logo/mdb-transparent.png" height="30" class="d-inline-block align-top" alt="">
-      </a>
-    </mdb-navbar-brand>
-  
-    <mdb-icon fas icon="angle-left" size="lg" class="text-white mr-auto d-flex d-md-none align-self-center"></mdb-icon>
-  
-    <!-- Collapsible content -->
-    <links>
-  
-      <!-- Links -->
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link waves-light" mdbWavesEffect>Home<span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link waves-light" mdbWavesEffect>Produtores</a>
-        </li>
-  
-        <!-- Dropdown -->
-        <li class="nav-item dropdown" dropdown>
-          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
-            Atendimentos<span class="caret"></span></a>
-          <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
-            <a class="dropdown-item waves-light" mdbWavesEffect href="#">Registrar</a>
-            <a class="dropdown-item waves-light" mdbWavesEffect href="#">Modificar valores</a>
-            <a class="dropdown-item waves-light" mdbWavesEffect href="#">Modificar status</a>
-            <a class="dropdown-item waves-light" mdbWavesEffect href="#">Encaminhar</a>
-            <div class="divider dropdown-divider"></div>
-            <a class="dropdown-item waves-light" mdbWavesEffect href="#">Anexar arquivo</a>
-          </div>
-        </li>
-  
-      </ul>
-      <!-- Links -->
-  
-      <!-- Search form -->
-      <form class="form-inline waves-light" mdbWavesEffect>
-        <div class="md-form my-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="Search">
+  <mdb-navbar-brand>
+    <a class="navbar-brand" href="#">
+      <img src="https://mdbootstrap.com/img/logo/mdb-transparent.png" height="30" class="d-inline-block align-top"
+        alt="">
+    </a>
+  </mdb-navbar-brand>
+
+  <mdb-icon fas icon="angle-left" size="lg" class="text-white mr-auto d-flex d-md-none align-self-center"></mdb-icon>
+
+  <!-- Collapsible content -->
+  <links>
+
+    <!-- Links -->
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link waves-light" mdbWavesEffect>Home<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link waves-light" mdbWavesEffect>Produtores</a>
+      </li>
+      <!-- Dropdown -->
+      <li class="nav-item dropdown" dropdown>
+        <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+          Atendimentos<span class="caret"></span></a>
+        <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+          <a class="dropdown-item waves-light" mdbWavesEffect href="#">Registrar</a>
+          <a class="dropdown-item waves-light" mdbWavesEffect href="#">Modificar valores</a>
+          <a class="dropdown-item waves-light" mdbWavesEffect href="#">Modificar status</a>
+          <a class="dropdown-item waves-light" mdbWavesEffect href="#">Encaminhar</a>
+          <div class="divider dropdown-divider"></div>
+          <a class="dropdown-item waves-light" mdbWavesEffect href="#">Anexar arquivo</a>
         </div>
-      </form>
-    </links>
-    <!-- Collapsible content -->
-  
-  
-  </mdb-navbar>
-  <!--/.Navbar-->
+      </li>
+
+      <li class="nav-item" (click)="logout()">
+        <a class="nav-link waves-light" mdbWavesEffect>
+            Usuário: {{usuario.value?.nome}}
+        </a>
+      </li>
+    </ul>
+    <!-- Links -->
+
+  </links>
+  <!-- Collapsible content -->
+
+</mdb-navbar>
+<!--/.Navbar-->
