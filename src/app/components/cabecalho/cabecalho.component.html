@@ -1,5 +1,5 @@
 <!--Navbar-->
-<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark indigo" *ngIf="(roletecnico  | async) || (rolecedido | async)">
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark indigo" *ngIf="(roletecnico | async) || (rolecedido | async)">
 
   <mdb-navbar-brand>
     <a class="navbar-brand" href="#">
@@ -26,7 +26,7 @@
         <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
           Atendimentos<span class="caret"></span></a>
         <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
-          <a class="dropdown-item waves-light" mdbWavesEffect href="#">Registrar</a>
+          <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/atendimento/register']">Registrar</a>
           <a class="dropdown-item waves-light" mdbWavesEffect href="#">Modificar valores</a>
           <a class="dropdown-item waves-light" mdbWavesEffect href="#">Modificar status</a>
           <a class="dropdown-item waves-light" mdbWavesEffect href="#">Encaminhar</a>
@@ -38,6 +38,9 @@
       <li class="nav-item" (click)="logout()">
         <a class="nav-link waves-light" mdbWavesEffect>
             Usuário: {{usuario.value?.nome}}
+            <mdb-icon fas icon="users"*ngIf="(roleadmin | async)"></mdb-icon>
+            <mdb-icon fas icon="user-cog"*ngIf="(roletecnico | async)"></mdb-icon>
+            <mdb-icon fas icon="user-circle"*ngIf="(rolecedido | async)"></mdb-icon>
         </a>
       </li>
     </ul>

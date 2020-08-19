@@ -4,18 +4,30 @@ import { CommonModule } from '@angular/common';
 import { AtendimentoRoutingModule } from './atendimento-routing.module';
 import { AtedimentoService } from './atedimento.service';
 import { AtendimentoListComponent } from '../components/atendimentos/atendimento-list/atendimento-list.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { AtendimentoRegisterComponent } from '../components/atendimentos/atendimento-register/atendimento-register.component';
+import { ApiService } from '../core/api.service';
+import { PesquisaServicosComponent } from './componentes/pesquisa-servicos/pesquisa-servicos.component';
 
 @NgModule({
   declarations: [
-    AtendimentoListComponent
+    AtendimentoListComponent,
+    AtendimentoRegisterComponent,
+    PesquisaServicosComponent
   ],
   imports: [
     CommonModule,
+    MatAutocompleteModule,
+    FormsModule,
+    ReactiveFormsModule,
+
     AtendimentoRoutingModule
   ],
   providers:[
-    AtedimentoService
+    AtedimentoService,
+    ApiService
   ]
 
 })

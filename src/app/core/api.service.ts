@@ -6,79 +6,108 @@ import { CredencialModel } from '../models/credencial.model';
 import { HttpParams, HttpClient } from '@angular/common/http';
 import { UsuarioModel } from '../models/usuario.model';
 import { RouteConfigLoadEnd, Router } from '@angular/router';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  
-  isLoggedIn():boolean {
+
+  isLoggedIn(): boolean {
     return (window.localStorage[AppUtils.TOKEN]) ? true : false;
   }
 
   constructor(
     private http: HttpClient,
     private route: Router
-  ) { 
+  ) {
 
   }
 
-  login(user: CredencialModel): Observable <any> {
+  login(user: CredencialModel): Observable<any> {
 
     return this.http.post(AppUtils.LOGIN_URL, user);
 
   }
-  registerToken(token:string){
-    window.localStorage.setItem(AppUtils.TOKEN, token);
-    this.usuario.next( this.jwtDecode(this.getAccessToken()))
+  getServicesForApi(value: string): Observable<any> {
+
+    return this.http.get(`${AppUtils.SERVICOS_URL}/${value}`);
+
   }
-  jwtDecode(token:string): UsuarioModel {
+
+  registerToken(token: string) {                            
+    window.localStorage.setItem(AppUtils.TOKEN, token);
+    this.usuario.next(this.jwtDecode(this.getAccessToken()))
+  }
+
+  jwtDecode(token: string): UsuarioModel {
     let usuario: UsuarioModel;
-    try{
+    try {
       usuario = JSON.parse(window.atob(token.split('.')[1]));
-      return usuario;
-    }catch(err){
+
+      if (moment(usuario.expiration).isAfter(moment())) {
+        return usuario;
+      }
+      return null;
+
+    } catch (err) {
       return null;
     }
 
   }
-  getAccessToken():string {
+  getAccessToken(): string {
     return window.localStorage[AppUtils.TOKEN];
   }
-  get usuario():BehaviorSubject<UsuarioModel>{
+  get usuario(): BehaviorSubject<UsuarioModel> {
     return new BehaviorSubject(
       this.jwtDecode(this.getAccessToken())
     );
   }
-  logout(){
+  logout() {
     window.localStorage.removeItem(AppUtils.TOKEN);
-    this.usuario.next( this.jwtDecode(this.getAccessToken()) )
+    this.usuario.next(this.jwtDecode(this.getAccessToken()))
     this.route.navigate(['/']);
   }
-  get roleadmin():boolean{
-    try{
+  get roleadmin(): boolean {
+    try {
+      if (this.jwtDecode(this.getAccessToken()).role === 'ADMIN') {
+        return true;
+      } else {
+        return false;
+      }
 
-      return this.jwtDecode(this.getAccessToken()).role === 'ADMIN'? true : false
-    }catch(err){
+    } catch (err) {
       return false;
     }
   }
-  get roletecnico():boolean{
-    try{
+  get roletecnico(): boolean {
+    try {
+      if (this.jwtDecode(this.getAccessToken()).role === 'TECNICO') {
+        return true;
+      } else {
+        return false;
+      }
 
-      return this.jwtDecode(this.getAccessToken()).role === 'TECNICO'? true : false
-    }catch(err){
+    } catch (err) {
       return false;
     }
+
+
   }
 
-  get rolecedido():boolean{
-    try{
-      return this.jwtDecode(this.getAccessToken()).role === 'CEDIDO'? true : false
-    }catch(err){
+  get rolecedido(): boolean {
+
+    try {
+      if (this.jwtDecode(this.getAccessToken()).role === 'CEDIDO') {
+        return true;
+      } else {
+        return false;
+      }
+
+    } catch (err) {
       return false;
     }
-  }
 
+  }
 }

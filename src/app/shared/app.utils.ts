@@ -6,6 +6,10 @@ export const TOKEN = "token";
 export const LOGIN_URL = BASE_URL + 'usuarios/auth';
 //URL para obter lista de atendimentos
 export const ATENDIMENTOS_URL = BASE_URL + 'tarefas';
+
+//URL para obter lista de serviços prestados
+export const SERVICOS_URL = BASE_URL + 'services';
+
 //Header tokem
 export const headersToken = new HttpHeaders({
  Authorization: 'Bearer ' + window.localStorage.getItem(TOKEN)

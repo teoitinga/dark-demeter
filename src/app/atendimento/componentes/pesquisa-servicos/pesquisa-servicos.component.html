@@ -1,0 +1,30 @@
+<div class="card">
+  <h5>
+    <strong>Serviços prestados</strong>
+  </h5>
+  <div class="card-body px-lg-5 pt-0">
+    <form class="md-form" style="color: #757575;" [formGroup]="formularioDeServicos">
+      <!-- autocomplete-->
+      <input type="text" class="search" placeholder="pesquisar serviço" [formControl]="controlservicos"
+        [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith] = "displayfn">
+        <mat-option #servicoSelecionado *ngFor="let servico of servicosFiltered$ | async" [value]="servico">
+          {{servico.descricao}}
+        </mat-option>
+      </mat-autocomplete>
+      <!-- autocomplete-->
+      
+      <input type="text" id="precoServico" class="form-control" placeholder="Descrição do servico"
+        formControlName="descricaodoservico">
+      <input type="text" id="precoServico" class="form-control" placeholder="valor do projeto"
+        formControlName="valordoprojeto">
+      <input type="text" id="valordodae" class="form-control" placeholder="valor do dae"
+        formControlName="dae">
+      <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0"
+      type="submit">Registrar</button>
+
+    </form>
+  </div>
+</div>
+<li *ngFor="let servico of servicosFiltered$ | async">{{servico.descricao}}</li>
+Serviço: {{servicoSel | async}}

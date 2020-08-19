@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/core/api.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { UsuarioModel } from 'src/app/models/usuario.model';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-cabecalho',
@@ -32,12 +33,11 @@ export class CabecalhoComponent implements OnInit {
     return new Observable<boolean>(observer => {
       observer.next(this.apiservice.roletecnico);
     });
-
   }
+
   get rolecedido(): Observable<boolean> {
     return new Observable<boolean>(observer => {
       observer.next(this.apiservice.rolecedido);
     });
-
   }
 }

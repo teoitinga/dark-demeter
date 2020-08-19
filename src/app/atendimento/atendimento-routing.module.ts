@@ -9,9 +9,9 @@ const routes: Routes = [
         path: '',
         component: AtendimentoListComponent
     },
-    //Products
+    //registrar atendimentos
     {
-        path: 'about',
+        path: 'register',
         component: AtendimentoRegisterComponent
     }   
 ];
