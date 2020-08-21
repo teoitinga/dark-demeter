@@ -8,7 +8,7 @@
       <input type="text" class="search" placeholder="pesquisar serviço" [formControl]="controlservicos"
         [matAutocomplete]="auto">
       <mat-autocomplete #auto="matAutocomplete" [displayWith] = "displayfn">
-        <mat-option #servicoSelecionado *ngFor="let servico of servicosFiltered$ | async" [value]="servico">
+        <mat-option *ngFor="let servico of servicosFiltered$ | async" [value]="servico">
           {{servico.descricao}}
         </mat-option>
       </mat-autocomplete>
@@ -21,10 +21,9 @@
       <input type="text" id="valordodae" class="form-control" placeholder="valor do dae"
         formControlName="dae">
       <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0"
-      type="submit">Registrar</button>
+      type="submit" (click)="incluir()">Registrar</button>
 
     </form>
   </div>
 </div>
-<li *ngFor="let servico of servicosFiltered$ | async">{{servico.descricao}}</li>
-Serviço: {{servicoSel | async}}
+Servico {{servicoSelecionado}}

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -24,9 +24,7 @@ export class PesquisaServicosComponent implements OnInit {
   
   //atendimentos a registrar no banco de dados
   atendimentoedefinir: AtendimentoServiceModel;
-
-  @ViewChild('#servicoSelecionado')
-  servicoSel: Observable<ServicoModel>;
+  servico: AtendimentoServiceModel;
 
   constructor(
     private apiService: ApiService,
@@ -47,11 +45,14 @@ export class PesquisaServicosComponent implements OnInit {
   private _filter(){
     this.servicosFiltered$ = this.controlservicos.valueChanges
       .pipe(
-        filter(value => value.length > 3),
+        filter(value => value.length > 2),
         debounceTime(200),
         distinctUntilChanged(),
         switchMap(value => this.apiService.getServicesForApi(value)),
         );
+  }
+  configuraServico(data: any) {
+    throw new Error("Method not implemented.");
   }
 
   private _criarFormulario() {
@@ -61,8 +62,27 @@ export class PesquisaServicosComponent implements OnInit {
       dae: ['0'],
     });
   }
+  incluir(){
+    console.log("incluindo: " + JSON.stringify(this.servicoSelecionado));
 
-  displayfn(subject){
-    return subject?subject.descricao:undefined;
   }
+  displayfn(value){
+    return value?value.descricao:undefined;
+  }
+  
+  updateForm(value){
+    console.log("Seleção: " + JSON.stringify(this.servicoSelecionado));
+    if(value){
+      this.servicoSelecionado = (value);
+      let codigo = value['legenda'];
+      this.formularioDeServicos.patchValue({
+        descricaodoservico: [value.descricao],
+        dae: [value.valorReferencia],
+      });
+      
+      console.log("Code: " + codigo);
+    }
+
+  }
+  
 }
