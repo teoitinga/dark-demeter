@@ -1,48 +1,45 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { startWith, map, take, tap, filter, distinctUntilChanged, debounceTime, switchMap, takeLast } from 'rxjs/operators';
+import { FormControl, FormBuilder } from '@angular/forms';
+import { Observable, BehaviorSubject, } from 'rxjs';
+import { tap, filter, distinctUntilChanged, debounceTime, switchMap } from 'rxjs/operators';
 import { ServicoModel } from 'src/app/models/servicos.model';
 import { ApiService } from 'src/app/core/api.service';
-import { AtendimentoServiceModel } from '../../models/atendimento-service.model';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { AtedimentoService } from '../../atedimento.service';
 
 @Component({
-  selector: 'app-pesquisa-servicos',
+  selector: 'pesquisa-servicos',
   templateUrl: './pesquisa-servicos.component.html',
   styleUrls: ['./pesquisa-servicos.component.css']
 })
 export class PesquisaServicosComponent implements OnInit {
-
-  formularioDeServicos: FormGroup;
+  
+  @Input('atendimento') atendimento: string = '';
 
   controlservicos = new FormControl();
   
   servicosFiltered$: Observable<ServicoModel[]>;
 
-  servicoSelecionado: ServicoModel;
+  servicoSelecionado: Observable<ServicoModel>;
   
-  //atendimentos a registrar no banco de dados
-  atendimentoedefinir: AtendimentoServiceModel;
-  servico: AtendimentoServiceModel;
+  @Input() servico: ServicoModel;
+  
+  @Output() atualizouServico = new EventEmitter();
 
   constructor(
     private apiService: ApiService,
-    private fb: FormBuilder
+    private atedimentoService: AtedimentoService
+
   ) { }
 
   ngOnInit(): void {
 
-    this._criarFormulario();
     this._carregaServicosApi();
 
   }
 
   private _carregaServicosApi() {
-    this._filter();
-        
-  }
-  private _filter(){
     this.servicosFiltered$ = this.controlservicos.valueChanges
       .pipe(
         filter(value => value.length > 2),
@@ -50,39 +47,22 @@ export class PesquisaServicosComponent implements OnInit {
         distinctUntilChanged(),
         switchMap(value => this.apiService.getServicesForApi(value)),
         );
-  }
-  configuraServico(data: any) {
-    throw new Error("Method not implemented.");
-  }
-
-  private _criarFormulario() {
-    this.formularioDeServicos = this.fb.group({
-      descricaodoservico: ['***'],
-      valordoprojeto: ['0'],
-      dae: ['0'],
-    });
-  }
-  incluir(){
-    console.log("incluindo: " + JSON.stringify(this.servicoSelecionado));
 
   }
+ 
+  selecionaServico(value){
+    console.log("Selecionando serviço: " + value.descricao);
+    this.servicoSelecionado = (value);
+    this.servico = value;//new BehaviorSubject(value);
+    this.atedimentoService.setServico(this.servico);
+    
+    //emitindo notificação para atualização de serviço
+    this.atualizouServico.emit(this.servico)
+
+  }
+
   displayfn(value){
-    return value?value.descricao:undefined;
+    return value?value.descricao:value;
   }
-  
-  updateForm(value){
-    console.log("Seleção: " + JSON.stringify(this.servicoSelecionado));
-    if(value){
-      this.servicoSelecionado = (value);
-      let codigo = value['legenda'];
-      this.formularioDeServicos.patchValue({
-        descricaodoservico: [value.descricao],
-        dae: [value.valorReferencia],
-      });
-      
-      console.log("Code: " + codigo);
-    }
-
-  }
-  
+   
 }

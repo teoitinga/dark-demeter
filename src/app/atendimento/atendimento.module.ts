@@ -10,12 +10,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { AtendimentoRegisterComponent } from '../components/atendimentos/atendimento-register/atendimento-register.component';
 import { ApiService } from '../core/api.service';
 import { PesquisaServicosComponent } from './componentes/pesquisa-servicos/pesquisa-servicos.component';
+import { ServicosCadastroComponent } from './componentes/servicos-cadastro/servicos-cadastro.component';
 
 @NgModule({
   declarations: [
     AtendimentoListComponent,
     AtendimentoRegisterComponent,
-    PesquisaServicosComponent
+    PesquisaServicosComponent,
+    ServicosCadastroComponent
   ],
   imports: [
     CommonModule,

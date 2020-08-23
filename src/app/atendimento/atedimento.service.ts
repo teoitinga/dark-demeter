@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { AtendimentoRoutingModule } from './atendimento-routing.module';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import * as AppUtils from '../shared/app.utils';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { ServicoModel } from '../models/servicos.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AtedimentoService {
-
+  servico: BehaviorSubject<ServicoModel>
   constructor(
     private http: HttpClient
   ) { }
@@ -16,4 +17,19 @@ export class AtedimentoService {
   getAtendimentos(): Observable<any>{
     return this.http.get<any>(AppUtils.ATENDIMENTOS_URL);
   }
+  getServico(): BehaviorSubject<ServicoModel> {
+    if(this.servico){
+      return this.servico;
+    }else{
+      return new BehaviorSubject(
+        new ServicoModel()
+      );
+    }
+
+  }
+  setServico(servico: ServicoModel) {
+    //this.servico.next(servico);
+
+  }
+
 }

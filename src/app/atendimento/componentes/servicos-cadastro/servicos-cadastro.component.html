@@ -1,0 +1,42 @@
+  <div class="">
+    <pesquisa-servicos [servico]="servico" (atualizouServico)="onSelecionaServico($event)" ></pesquisa-servicos>
+  </div>
+  <form [formGroup]="formServico" (ngSubmit)="enviarDados()">
+    <div>
+      <label >Descrição: </label>
+      <input type="text" formControlName="descricao">
+    </div>
+  
+    <div>
+      <label >tempoNecessario: </label>
+      <input type="text" formControlName="tempoNecessario">
+    </div>
+  
+    <div>
+      <label >valor do DAE: </label>
+      <input type="text" formControlName="valorDoDae">
+    </div>
+    <div>
+      <label >valor do projeto: </label>
+      <input type="text" formControlName="valorDoProjeto">
+    </div>
+    <div>
+      <label >emitiuDae: </label>
+      <input type="checkbox" checked="true" formControlName="emitiuDae">
+    </div>
+    <div>
+      <label >valorDoDae: </label>
+      <input type="checkbox" checked="true" formControlName="valorDoDae">
+    </div>
+  
+    <br>
+    <div>
+      <button [disabled]="!formServico.valid">Enviar dados</button>
+    </div>
+  
+    <br>
+    <br>
+  
+    <div>{{ formServico.value | json}}</div>
+    <div>{{ formServico.valid | json }}</div>
+  </form>

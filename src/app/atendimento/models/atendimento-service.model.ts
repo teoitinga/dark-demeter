@@ -1,4 +1,4 @@
-export interface AtendimentoServiceModel {
+export class AtendimentoServiceModel {
         codDoServico: string;
         descricaoDoServico: string;
         emitiuArt: string;

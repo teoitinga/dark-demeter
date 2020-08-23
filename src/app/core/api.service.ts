@@ -3,9 +3,9 @@ import { Observable, BehaviorSubject } from 'rxjs';
 
 import * as AppUtils from '../shared/app.utils';
 import { CredencialModel } from '../models/credencial.model';
-import { HttpParams, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { UsuarioModel } from '../models/usuario.model';
-import { RouteConfigLoadEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import * as moment from 'moment';
 
 @Injectable({
@@ -67,17 +67,19 @@ export class ApiService {
   logout() {
     window.localStorage.removeItem(AppUtils.TOKEN);
     this.usuario.next(this.jwtDecode(this.getAccessToken()))
-    this.route.navigate(['/']);
+    this.vaiParaPaginaPrincipal();
   }
   get roleadmin(): boolean {
     try {
       if (this.jwtDecode(this.getAccessToken()).role === 'ADMIN') {
         return true;
       } else {
+        this.vaiParaPaginaPrincipal();
         return false;
       }
 
     } catch (err) {
+      this.vaiParaPaginaPrincipal();
       return false;
     }
   }
@@ -86,10 +88,12 @@ export class ApiService {
       if (this.jwtDecode(this.getAccessToken()).role === 'TECNICO') {
         return true;
       } else {
+        this.vaiParaPaginaPrincipal();
         return false;
       }
 
     } catch (err) {
+      this.vaiParaPaginaPrincipal();
       return false;
     }
 
@@ -102,12 +106,17 @@ export class ApiService {
       if (this.jwtDecode(this.getAccessToken()).role === 'CEDIDO') {
         return true;
       } else {
+        this.vaiParaPaginaPrincipal();
         return false;
       }
 
     } catch (err) {
+      this.vaiParaPaginaPrincipal()
       return false;
     }
 
+  }
+  vaiParaPaginaPrincipal(){
+    //this.route.navigate(['/']);
   }
 }
