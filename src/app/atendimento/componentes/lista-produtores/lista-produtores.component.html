@@ -1,0 +1,17 @@
+<p>lista-produtores works!</p>
+<table mdbTable>
+    <thead>
+      <tr>
+        <th *ngFor="let head of headElements" scope="col">{{head}} </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr mdbTableCol *ngFor="let produtor of produtores">
+        <th scope="row"></th>
+        <td>
+            <mdb-icon fas icon="calendar-times"></mdb-icon>
+        </td>
+        <td>{{produtor.nome}}</td>
+      </tr>
+    </tbody>
+  </table>

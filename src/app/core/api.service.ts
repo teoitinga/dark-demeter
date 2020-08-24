@@ -35,6 +35,16 @@ export class ApiService {
     return this.http.get(`${AppUtils.SERVICOS_URL}/${value}`);
 
   }
+  verificaRegistroPorCpf(value: string): Observable<any> {
+
+    return this.http.get(`${AppUtils.PRODUTOR_SEARCH_CPF_URL}/${value}`);
+
+  }
+  getTecnicosForApi(value: string): Observable<any> {
+
+    return this.http.get(`${AppUtils.TECNICOS_URL}/${value}`);
+
+  }
 
   registerToken(token: string) {                            
     window.localStorage.setItem(AppUtils.TOKEN, token);

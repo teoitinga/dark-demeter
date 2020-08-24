@@ -7,3 +7,5 @@ export class AtendimentoServiceModel {
         valorDoDae: string;
         valorDoServico: string;
     }
+
+      

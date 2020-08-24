@@ -1,5 +1,5 @@
 import { HttpHeaders } from '@angular/common/http';
-export const BASE_URL = 'http://localhost:8080/api/v1/';
+export const BASE_URL = 'http://localhost:4200/api/v1/';
 export const TOKEN = "token";
 
 //URL para autenticação de usuários
@@ -9,6 +9,12 @@ export const ATENDIMENTOS_URL = BASE_URL + 'tarefas';
 
 //URL para obter lista de serviços prestados
 export const SERVICOS_URL = BASE_URL + 'services';
+
+//URL para obter lista de tecnicos
+export const TECNICOS_URL = BASE_URL + 'usuarios/authorized';
+
+//URL para obter o produtor caso tenha registro de tecnicos
+export const PRODUTOR_SEARCH_CPF_URL = BASE_URL + 'produtores';
 
 //Header tokem
 export const headersToken = new HttpHeaders({

@@ -1,0 +1,39 @@
+<div [formGroup]="controlProdutor">
+
+    <!-- Grid row -->
+    <div class="row">
+        <!-- Grid column -->
+        <div class="col-md-6">
+    
+            <div class="md-form input-group">
+                <span class="input-group-btn">
+                    <button (click)="conferirCpf()" mdbBtn mdbWavesEffect gradient="peach" class="m-0" type="button">ok</button>
+                </span>
+                <input type="search" class="form-control" formControlName="cpf" placeholder="Pesquisar Cpf...">
+            </div>
+        </div>
+        <!-- Grid column -->
+    </div>
+    <!-- Grid row -->
+    <!-- Grid row -->
+    <div class="row">
+        <!-- Grid column -->
+        <div class="col-md-6">
+            <div class="md-form input-group">
+                <input type="search" class="form-control" formControlName="nome" placeholder="Nome do produtor">
+            </div>
+        </div>
+        <!-- Grid column -->
+    </div>
+    <!-- Grid row -->
+    <!-- Grid row -->
+    <div class="row">
+        <!-- Grid column -->
+        <div class="col-md-6">
+            <button mdbBtn (click)="confirmaProdutor()" mdbWavesEffect gradient="peach" class="m-0" type="button">incluir</button>
+        </div>
+        <!-- Grid column -->
+    </div>
+    <!-- Grid row -->
+
+</div>    
