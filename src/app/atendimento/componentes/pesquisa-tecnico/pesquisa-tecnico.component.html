@@ -1,24 +1,22 @@
-<div class="card">
-    <div class="card-body px-lg-5 pt-0">
-      <form class="md-form" style="color: #757575;">
+      <form class="container md-form">
         <!-- autocomplete-->
         <input type="text" 
-        class="search" 
+        class="col" 
         placeholder="selecione o responsável a atender este serviço" 
         [formControl]="controltecnicos"
         [matAutocomplete]="auto"
         >
-        <mat-autocomplete #auto="matAutocomplete" 
-        [displayWith] = "displayfn" 
-        autoActiveFirstOption
-        >
-  
-        <mat-option *ngFor="let tecnico of tecnicosFiltered$ | async" 
-              [value]="tecnico"
-              (onSelectionChange)="selecionaServico(tecnico)">
-            {{tecnico.nome}}
-          </mat-option>
-        </mat-autocomplete>
+        <div class="row">
+          <mat-autocomplete #auto="matAutocomplete" 
+          [displayWith] = "displayfn" 
+          autoActiveFirstOption
+          >
+          <mat-option *ngFor="let tecnico of tecnicosFiltered$ | async" 
+                [value]="tecnico"
+                (onSelectionChange)="selecionaServico(tecnico)">
+              {{tecnico.nome}}
+            </mat-option>
+          </mat-autocomplete>
+        </div>
       </form>
-    </div>
-  </div>
+

@@ -55,7 +55,7 @@ export class ServicosCadastroComponent implements OnInit {
   criarFormulario() {
     this.formServico = this.fb.group({
       descricao: [''],
-      tempoNecessario: [''],
+      tempoNecessario: [{value: '', disabled: true}],
       emitiuArt: [''],
       emitiuDae: ['true'],
       valorDoDae: ['0'],
