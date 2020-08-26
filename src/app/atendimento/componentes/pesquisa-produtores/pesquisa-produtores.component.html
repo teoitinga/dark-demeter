@@ -1,19 +1,18 @@
-<div class="container-fluid md-form" [formGroup]="controlProdutor">
-
-    <!-- Grid row -->
-    <div class="form-row">
-        <div class="col md-form input-group">
-            <button mat-button matSuffix mat-icon-button [disabled]="!controlProdutor.invalid" mat-icon-button
-                matTooltip="Verificar cliente cadastrado" aria-label="Verificar cliente cadastrado"
-                (click)="conferirCpf()">
+<div class="row" [formGroup]="controlProdutor">
+    <div class="row">
+        <div class="col">
+            <button mat-button matSuffix mat-icon-button style="width: 10px;" [disabled]="!controlProdutor.invalid"
+                matTooltip="Verificar cliente cadastrado" (click)="conferirCpf()">
                 <mat-icon>search</mat-icon>
             </button>
-            <input type="search" mascara="999.999.999-99" class="form-control" [disabled]="controlProdutor.invalid"
-                formControlName="cpf" placeholder="Pesquisar Cpf...">
         </div>
-        <input type="search" class="form-control form-control" formControlName="nome"
-            placeholder="Nome do produtor">
-        <button mdbBtn (click)="confirmaProdutor()" mdbWavesEffect class="blue-gradient m-3" type="button">incluir</button>
-    </div>
+        <div class="col">
+            <input matInput type="text" style="width: 10rem;" mascara="999.999.999-99" class="form-control"
+                formControlName="cpf" placeholder="Pesquisar Cpf...">
 
+        </div>
+    </div>
+    <input type="search" style="width: 80%;" class="form-control form-control" formControlName="nome"
+        placeholder="Nome do produtor">
+    <button mdbBtn (click)="confirmaProdutor()" mdbWavesEffect class="blue-gradient m-3" type="button">incluir</button>
 </div>

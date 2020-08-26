@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { ProdutorMin } from '../../models/produtor-min.model';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ApiService } from 'src/app/core/api.service';
 import { AtedimentoService } from '../../atedimento.service';
@@ -30,14 +30,14 @@ export class PesquisaProdutoresComponent implements OnInit {
     private fb: FormBuilder
 
   ) {
-    this.criarFormulario();
-   }
+  }
   ngOnInit(): void {
+    this.criarFormulario();
   }
   criarFormulario() {
     this.controlProdutor = this.fb.group({
       cpf: ['', Validators.required],
-      nome: ['', Validators.required]
+      nome: [{ value: '', disabled: false }, Validators.required]
     });
 
   }

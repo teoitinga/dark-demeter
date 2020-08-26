@@ -35,11 +35,13 @@ export class ServicosCadastroComponent implements OnInit {
   
   constructor(
     private fb: FormBuilder
-  ) { }
+  ) { 
+    this.criarFormulario();
+
+  }
 
   ngOnInit(): void {
     this.clearVars();
-    this.criarFormulario();
   }
   clearVars(){
     //certifica que as variaveis se manterão zeradas;

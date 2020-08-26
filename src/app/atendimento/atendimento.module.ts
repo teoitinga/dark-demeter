@@ -6,7 +6,7 @@ import { AtedimentoService } from './atedimento.service';
 import { AtendimentoListComponent } from '../components/atendimentos/atendimento-list/atendimento-list.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule, FormBuilder } from '@angular/forms'
 import { AtendimentoRegisterComponent } from '../components/atendimentos/atendimento-register/atendimento-register.component';
 import { ApiService } from '../core/api.service';
 import { PesquisaServicosComponent } from './componentes/pesquisa-servicos/pesquisa-servicos.component';
@@ -19,6 +19,9 @@ import { SharedModule } from '../shared/shared.module';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatInputModule} from '@angular/material/input';
+
 // MDB Angular Free
 import { InputsModule, WavesModule, ButtonsModule } from 'angular-bootstrap-md';
 import { ListaProdutoresComponent } from './componentes/lista-produtores/lista-produtores.component'
@@ -46,7 +49,9 @@ import { ListaProdutoresComponent } from './componentes/lista-produtores/lista-p
     InputsModule,
     WavesModule,
     ButtonsModule,
-
+    MatCheckboxModule,
+    MatInputModule,
+    
     AtendimentoRoutingModule
   ],
   providers:[
