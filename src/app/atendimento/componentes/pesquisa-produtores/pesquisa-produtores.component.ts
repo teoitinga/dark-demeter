@@ -69,12 +69,19 @@ export class PesquisaProdutoresComponent implements OnInit {
     console.log("Produtor selecionado " + this.controlProdutor.controls['cpf'].value);
   }
   confirmaProdutor(){
-    this.produtor = new ProdutorMin();
-    this.produtor.nome = this.controlProdutor.controls['nome'].value;
-    this.produtor.cpf = this.controlProdutor.controls['cpf'].value;
-    this.atualizouProdutor.emit(this.produtor);
+    if(!this.controlProdutor.invalid){
+      this.produtor = new ProdutorMin();
+      this.produtor.nome = this.controlProdutor.controls['nome'].value;
+      this.produtor.cpf = this.controlProdutor.controls['cpf'].value;
+      this.atualizouProdutor.emit(this.produtor);
+      this.clearForm();
+      this.produtor = null;
+    }
   }
-
+  clearForm(){
+    this.controlProdutor.controls['nome'].reset({ value: '', disabled: false });
+    this.controlProdutor.controls['cpf'].reset({ value: '', disabled: false });
+  }
   displayfn(value){
     return value?value.nome:value;
   }

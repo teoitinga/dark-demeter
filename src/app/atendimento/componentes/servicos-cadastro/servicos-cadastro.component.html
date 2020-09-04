@@ -1,34 +1,37 @@
 <form [formGroup]="formServico">
-<div class="container-lg z-depth-1">
-  <div class="row">
-    <div class="col">
-      <pesquisa-produtores (atualizouProdutor)="onSelecionaProdutor($event)"></pesquisa-produtores>
-    </div>
-    <div class="col">
-      <div class="row">
-        <mat-checkbox formControlName="createFolder"> - Criar pasta para este atendimento</mat-checkbox>
+  <div class="container-lg z-depth-1">
+    <div class="row">
+      <div class="col">
+        <pesquisa-produtores (atualizouProdutor)="onSelecionaProdutor($event)"></pesquisa-produtores>
       </div>
-      <div class="row">
+      <div class="col">
         <div class="row">
-          <div class="col">
-            <mat-checkbox color='primary' formControlName="emitiuArt"> - Emitiu ART</mat-checkbox>
-          </div>
-          <div class="col">
-            <mat-checkbox formControlName="emitiuDae"> - Emitiu DAE</mat-checkbox>
+          <mat-checkbox formControlName="createFolder"> - Criar pasta para este atendimento</mat-checkbox>
+        </div>
+        <div class="row">
+          <div class="row">
+            <div class="col">
+              <mat-checkbox color='primary' formControlName="emitiuArt"> - Emitiu ART</mat-checkbox>
+            </div>
+            <div class="col">
+              <mat-checkbox formControlName="emitiuDae"> - Emitiu DAE</mat-checkbox>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <pesquisa-tecnico (atualizouTecnico)="onSelecionaTecnico($event)"></pesquisa-tecnico>
+        <div class="row">
+          <div class="col">
+            <pesquisa-tecnico (atualizouTecnico)="onSelecionaTecnico($event)"></pesquisa-tecnico>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-  <div class="container-fluid">
+
+  daqui para baixo pode excluir
+  <div class="container-lg z-depth-1">
+
     <div class="row">
-      <div class="col col-example ">
+      <div class="col">
         <!--Textarea with icon prefix-->
         <div class="md-form">
           <mdb-icon fas icon="pencil-alt" class="prefix"></mdb-icon>
@@ -37,39 +40,42 @@
         </div>
       </div>
       <div class="w-100"></div>
-      <div class="col col-example">
+      <div class="row">
+        <div class="select-servico">
+          <pesquisa-servicos [servico]="servico" (atualizouServico)="onSelecionaServico($event)"></pesquisa-servicos>
+        </div>
+      </div>
+      <div class="row">
         <div class="md-form">
-          <label for="descricao">Descrição do serviço: </label>
-          <input type="text" id="descricao" formControlName="descricao" class="form-control">
+          <input matInput placeholder="Descrição do serviço" type="text" id="descricao" formControlName="descricao"
+            class="form-control">
         </div>
-        <div class="md-form">
-          <label for="tempoNecessario">Data de conclusão prevista: </label>
-          <input type="text" id="tempoNecessario" formControlName="tempoNecessario" class="form-control">
+        <div class="row">
+          <div class="md-form">
+            <input type="text" id="tempoNecessario" formControlName="tempoNecessario" class="form-control">
+          </div>
+          
         </div>
-        <div class="md-form">
-          <label for="valorDoDae">Valor do DAE: </label>
-          <input type="text" id="valorDoDae" formControlName="valorDoDae" class="form-control">
-        </div>
-        <div class="md-form">
-          <label for="valorDoProjeto">Valor do projeto: </label>
-          <input type="text" id="valorDoProjeto" formControlName="valorDoProjeto" class="form-control">
-        </div>
+            <div class="row">
+              <div class="col">
+                <div class="md-form">
+                  <input type="text" id="valorDoDae" formControlName="valorDoDae" class="form-control">
+                </div>
+                <div class="md-form">
+                  <input type="text" id="valorDoProjeto" formControlName="valorDoProjeto" class="form-control">
+                </div>
+              </div>
+  
+            </div>
 
 
-
-
-        <div>
-
-        </div>
       </div>
     </div>
 
   </div>
 
 
-  <div class="select-servico">
-    <pesquisa-servicos [servico]="servico" (atualizouServico)="onSelecionaServico($event)"></pesquisa-servicos>
-  </div>
+
 
 
   <div class="select-produtor">
