@@ -16,6 +16,9 @@ export const TECNICOS_URL = BASE_URL + 'usuarios/authorized';
 //URL para obter o produtor caso tenha registro de tecnicos
 export const PRODUTOR_SEARCH_CPF_URL = BASE_URL + 'produtores';
 
+//URL para obter o produtor caso tenha registro de tecnicos
+export const ATENDIMENTOS_POST_URL = BASE_URL + 'tarefas';
+
 //Header tokem
 export const headersToken = new HttpHeaders({
  Authorization: 'Bearer ' + window.localStorage.getItem(TOKEN)

@@ -1,0 +1,41 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    align-content: flex-end;
+    justify-content: space-between;
+}
+.search{
+
+}
+.cpf-info{
+    width: 9rem;
+    margin-left: 15px;
+}
+.container div{
+
+}
+.container button{
+
+}
+.cpf-produtor{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+.produtor{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+
+}
+.cpf-produtor div{
+
+}
+.nome-produtor{
+    width: 20rem;
+    margin-left: 20px;
+
+}
+.button-ok{
+
+}

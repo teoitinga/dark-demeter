@@ -1,89 +1,68 @@
 <form [formGroup]="formServico">
-  <div class="container-lg z-depth-1">
-    <div class="row">
-      <div class="col">
+  <div class="container-lg z-depth-1 container">
+    <div class="datepicker">
+      <mat-form-field class="example-full-width" appearance="">
+        <mat-label>Data do atendimento:</mat-label>
+        <input matInput [matDatepickerFilter]="myFilter" [min]="minDate" [max]="maxDate" [matDatepicker]="picker" formControlName="dataAtendimento">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      
+    </div>
+    <div class="options">
+      <mat-checkbox color='primary' formControlName="createFolder"> - Criar pasta para este atendimento</mat-checkbox>
+      <mat-checkbox color='primary' formControlName="emitiuDae"> - Emitiu DAE</mat-checkbox>
+      <mat-checkbox color='primary' formControlName="emitiuArt"> - Emitiu ART</mat-checkbox>
+      <div class="select-tecnico">
+        <pesquisa-tecnico (atualizouTecnico)="onSelecionaTecnico($event)"></pesquisa-tecnico>
+      </div>
+    </div>
+    <div class="head-atendimentos">
+      <div class="select-produtor">
+        <div class="headtext">
+          Produtores atendidos
+        </div>
         <pesquisa-produtores (atualizouProdutor)="onSelecionaProdutor($event)"></pesquisa-produtores>
       </div>
-      <div class="col">
-        <div class="row">
-          <mat-checkbox formControlName="createFolder"> - Criar pasta para este atendimento</mat-checkbox>
+      <div class="select-servico">
+        <div class="headtext">
+          Serviços prestados
         </div>
-        <div class="row">
-          <div class="row">
-            <div class="col">
-              <mat-checkbox color='primary' formControlName="emitiuArt"> - Emitiu ART</mat-checkbox>
-            </div>
-            <div class="col">
-              <mat-checkbox formControlName="emitiuDae"> - Emitiu DAE</mat-checkbox>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <pesquisa-tecnico (atualizouTecnico)="onSelecionaTecnico($event)"></pesquisa-tecnico>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  daqui para baixo pode excluir
-  <div class="container-lg z-depth-1">
-
-    <div class="row">
-      <div class="col">
-        <!--Textarea with icon prefix-->
+        <pesquisa-servicos [servico]="servico" (atualizouServico)="onSelecionaServico($event)"></pesquisa-servicos>
         <div class="md-form">
-          <mdb-icon fas icon="pencil-alt" class="prefix"></mdb-icon>
-          <textarea type="text" id="form8" class="md-textarea form-control" mdbInput></textarea>
-          <label for="form8">Orientações:</label>
-        </div>
-      </div>
-      <div class="w-100"></div>
-      <div class="row">
-        <div class="select-servico">
-          <pesquisa-servicos [servico]="servico" (atualizouServico)="onSelecionaServico($event)"></pesquisa-servicos>
-        </div>
-      </div>
-      <div class="row">
-        <div class="md-form">
-          <input matInput placeholder="Descrição do serviço" type="text" id="descricao" formControlName="descricao"
+          <label for="descricao">Descrição do serviço</label>
+          <input mdbInput type="text" id="descricao" class="form-control" formControlName="descricao"
             class="form-control">
         </div>
-        <div class="row">
+        <div class="custos-servicos">
           <div class="md-form">
-            <input type="text" id="tempoNecessario" formControlName="tempoNecessario" class="form-control">
+            <label for="valorDoProjeto">Valor do projeto (R$) </label>
+            <input mdbInput type="text" id="valorDoProjeto" formControlName="valorDoProjeto" class="form-control">
           </div>
-          
+          <div class="md-form">
+            <label for="valorDoDae">Valor do DAE</label>
+            <input mdbInput type="text" id="valorDoDae" formControlName="valorDoDae" class="form-control">
+          </div>
+          <div class="md-form">
+            <label for="tempoNecessario" class="">Data de conclusão</label>
+            <input mdbInput type="text" id="tempoNecessario" formControlName="tempoNecessario" class="form-control">
+          </div>
         </div>
-            <div class="row">
-              <div class="col">
-                <div class="md-form">
-                  <input type="text" id="valorDoDae" formControlName="valorDoDae" class="form-control">
-                </div>
-                <div class="md-form">
-                  <input type="text" id="valorDoProjeto" formControlName="valorDoProjeto" class="form-control">
-                </div>
-              </div>
-  
-            </div>
-
-
+        <button mdbBtn (click)="incluirServico()" mdbWavesEffect class="blue-gradient m-3" type="button">incluir
+          serviço</button>
       </div>
     </div>
-
+  </div>
+  <div class="container-lg z-depth-1 container orientacoes md-form">
+    <!--Textarea with icon prefix-->
+    <mdb-icon fas icon="pencil-alt" class="prefix"></mdb-icon>
+    <textarea type="text" id="orientacoes" formControlName="recomendacoes" class="md-textarea form-control" mdbInput></textarea>
+    <label for="orientacoes">Orientações:</label>
   </div>
 
 
-
-
-
-  <div class="select-produtor">
-    <pesquisa-produtores (atualizouProdutor)="onSelecionaProdutor($event)"></pesquisa-produtores>
-  </div>
-  <br>
   <div>
-    <button [disabled]="!formServico.valid" (click)="enviarDados()" mdbBtn type="button" color="success"
+    <button (click)="registraAtendimento()" mdbBtn type="button" color="success"
       mdbWavesEffect>Enviar dados</button>
   </div>
   <div>

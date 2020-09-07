@@ -2,6 +2,8 @@
   "extends": "tslint:recommended",
   "rules": {
     "array-type": false,
+    "no-duplicate-imports": false,
+    "disable-next-line": false,
     "arrow-parens": false,
     "deprecation": {
       "severity": "warning"

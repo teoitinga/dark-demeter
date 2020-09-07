@@ -1,12 +1,60 @@
-.servico-container{
+.container{
+    display: flex;
+    flex-direction: column;
     margin: 30px;
 }
+.options div:nth-child(4){
+    flex: 0 0 50%;
+    margin-left: 20px;
+}
+.options{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-self: stretch;
+    align-items: flex-start;
+    margin: 5px;
+    padding: 5px;
+    border-bottom: solid 1px grey;
+}
+.orientacoes textarea{
+    height: 550px;
+}
+.head-atendimentos{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-self: stretch;
+    align-items: flex-start;
+}
 .select-tecnico{
-
+    width: 100%;
+    
 }
 .select-servico{
-
+    width: 100%;
+    
+}
+.custos-servicos{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+.custos-servicos div:nth-child(2){
+    margin-left: 20px;
+}
+.custos-servicos div:nth-child(3){
+    margin-left: 20px;
 }
 .select-produtor{
+    margin-left: 20px;
+    width: 100%;
     
+}
+.headtext{
+    text-align: center;
+    vertical-align: middle;
+    font-weight: ligther;
+    height: 30px;
+    background-image: linear-gradient(rgba(211, 195, 195, 0.966), rgb(248, 248, 178));
 }

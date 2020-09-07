@@ -1,25 +1,41 @@
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Component, OnInit, Input } from '@angular/core';
+
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 import { ServicoModel } from 'src/app/models/servicos.model';
 import { AtendimentoServiceModel } from 'src/app/atendimento/models/atendimento-service.model';
 import { ProdutorMin } from '../../models/produtor-min.model';
 import { AtendimentoModel } from '../../models/atendimento-post.model';
 import { ServicoPostModel } from '../../models/servico-post.model';
 import { TecnicoModel } from '../../models/tecnicos.models';
+import * as _moment from 'moment';
+import { AtedimentoService } from '../../atedimento.service';
 
+// See the Moment.js docs for the meaning of these formats:
+// https://momentjs.com/docs/#/displaying/format/
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'LL',
+  },
+  display: {
+    dateInput: 'LL',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 @Component({
   selector: 'servicos-cadastro',
   templateUrl: './servicos-cadastro.component.html',
-  styleUrls: ['./servicos-cadastro.component.css']
+  styleUrls: ['./servicos-cadastro.component.css'],
 })
 export class ServicosCadastroComponent implements OnInit {
-  
+
   atendimento: AtendimentoServiceModel = new AtendimentoServiceModel();
-  
+
   atendimentos: AtendimentoServiceModel[] = [];
-  
+
   formServico: FormGroup;
-  
+
   @Input() servico: ServicoModel;//variavel que recebe o serviço da seleção vinda da API
   //definições para atendimentos
 
@@ -32,10 +48,24 @@ export class ServicosCadastroComponent implements OnInit {
   //matriz de atendimentos
   produtores: ProdutorMin[] = [];//matriz de produtores atendidos
   servicos: ServicoPostModel[] = [];//matriz de serviços pretados
-  
+  //filter do datepicker
+  myFilter = (d: Date | null): boolean => {
+    const day = (d || new Date()).getDay();
+    // Prevent Saturday and Sunday from being selected.
+    return day !== 0 && day !== 6;
+  }
+  //intervalo de datas a selecionar
+  minDate: Date;
+  maxDate: Date;
+
   constructor(
-    private fb: FormBuilder
-  ) { 
+    private fb: FormBuilder,
+    private atedimentoService: AtedimentoService
+  ) {
+    //Configura a data mínima para 01 de janeiro do ano corrente e a maior data, 20 de dezembro do ano atual
+    const currentYear = new Date().getFullYear();
+    this.minDate = new Date(currentYear, 0, 1);
+    this.maxDate = new Date(currentYear, 11, 20);
     this.criarFormulario();
 
   }
@@ -43,42 +73,64 @@ export class ServicosCadastroComponent implements OnInit {
   ngOnInit(): void {
     this.clearVars();
   }
-  clearVars(){
+  clearVars() {
     //certifica que as variaveis se manterão zeradas;
     this.produtores = [];
     this.servicos = [];
   }
-  clearServices(){
+  clearServices() {
     this.servicos = [];
   }
-  clearProdutores(){
+  clearProdutores() {
     this.produtores = [];
   }
   criarFormulario() {
     this.formServico = this.fb.group({
-      descricao: [''],
-      tempoNecessario: [{value: '', disabled: true}],
-      emitiuArt: [''],
-      emitiuDae: ['true'],
+      descricao: ['', Validators.required],
+      tempoNecessario: [{ value: '', disabled: true }],
+      emitiuArt: ['false'],
+      emitiuDae: ['false'],
       valorDoDae: ['0'],
       valorDoProjeto: ['0'],
-      createFolder: ['true']
+      createFolder: ['true'],
+      recomendacoes: [''],
+      dataAtendimento: [_moment([2017, 0, 1])]
     });
   }
   atualizaFormulario() {
     this.formServico.patchValue({
       descricao: [this.servico.descricao],
-      tempoNecessario: [this.servico.tempoNecessario],
+      tempoNecessario: [_moment().add(this.servico.tempoNecessario, 'days').format('DD/MM/YYYY')],
       valorDoDae: [this.servico.valorReferencia]
     });
   }
-  registraAtendimento(){
-    console.log('Atendimentos registrados: ' + JSON.stringify(this.registro));
+  registraAtendimento() {
+    if (this.produtores.length > 0 && this.servicos.length > 0) {
+      this.registro = new AtendimentoModel();
+      this.registro.produtorInfo = this.produtores;
+      this.registro.tipoServico = this.servicos;
+      this.registro.recomendacoes = this.formServico.controls['recomendacoes'].value;
+
+      this.registro.createFolder = this.formServico.controls['createFolder'].value;
+      this.registro.dataDoAtendimento = this.formServico.controls['dataAtendimento'].value;
+      this.registro.responsavel = this.tecnico.cpf;
+
+      console.log('Atendimentos registrados: ' + JSON.stringify(this.registro));
+      this.atedimentoService.sendAtendimentos(this.registro).subscribe(
+        data=>{
+          console.info("Sucesso: ")
+
+        },
+        err=>{
+          console.error("Erro: " + err)
+        }
+      );
+    }
   }
-  
-  enviarDados(){
-    try{
-      if(this.servico.legenda){
+  incluirServico() {
+    console.log('incluindo servico');
+    try {
+      if (this.servico.legenda) {
         this.atendimento = this.formServico.value;
         this.atendimento.codDoServico = this.servico.legenda;
         //this.atendimentos.push(this.atendimento);
@@ -95,28 +147,28 @@ export class ServicosCadastroComponent implements OnInit {
         this.servicos.push(this.servicoAtd);
         console.log('Matriz de serviços: ' + JSON.stringify(this.servicos));
       }
-      
-    }catch(err){
+
+    } catch (err) {
       console.log('err: ' + (err));
       console.log('Matriz de serviços com err: ' + JSON.stringify(this.servicos));
 
     }
 
   }
-  onSelecionaServico(event){
+  onSelecionaServico(event) {
     this.servico = event;
     this.atualizaFormulario();
     console.log(event);
   }
-  onSelecionaTecnico(event){
+  onSelecionaTecnico(event) {
     this.tecnico = event;
     console.log("Tecnico selecionado " + this.tecnico.nome);
   }
-  onSelecionaProdutor(event){
+  onSelecionaProdutor(event) {
     this.produtor = new ProdutorMin();
     this.produtor = event;
     console.log("Produtor a incluir " + JSON.stringify(this.produtor));
     this.produtores.push(this.produtor);
   }
-  
+
 }

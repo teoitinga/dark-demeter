@@ -19,6 +19,8 @@
       "dom"
     ]
   },
+  "moduleResolution": "node",
+  "allowSyntheticDefaultImports": true,
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true

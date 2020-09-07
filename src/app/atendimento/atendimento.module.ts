@@ -21,7 +21,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatInputModule} from '@angular/material/input';
-
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 // MDB Angular Free
 import { InputsModule, WavesModule, ButtonsModule } from 'angular-bootstrap-md';
 import { ListaProdutoresComponent } from './componentes/lista-produtores/lista-produtores.component'
@@ -51,12 +52,16 @@ import { ListaProdutoresComponent } from './componentes/lista-produtores/lista-p
     ButtonsModule,
     MatCheckboxModule,
     MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     
     AtendimentoRoutingModule
   ],
   providers:[
     AtedimentoService,
-    ApiService
+    ApiService,
+    MatNativeDateModule,
+    MatDatepickerModule
   ]
 
 })
