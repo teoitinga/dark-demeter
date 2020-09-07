@@ -9,10 +9,12 @@ import { ProdutorMin } from '../../models/produtor-min.model';
 export class ListaProdutoresComponent implements OnInit {
   
   @Input() produtores: ProdutorMin[] = [];//matriz de produtores atendidos
-  headElements = ['Nome do produtor atendido', ''];
+  headElements = ['','Produtor atendido'];
   constructor() { }
   
   ngOnInit(): void {
   }
-
+  isempty():boolean{
+    return this.produtores.length < 1 ? true : false;
+  }
 }

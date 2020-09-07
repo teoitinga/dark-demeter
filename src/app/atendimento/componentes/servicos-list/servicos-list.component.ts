@@ -9,10 +9,12 @@ import { ServicoModel } from 'src/app/models/servicos.model';
 export class ServicosListComponent implements OnInit {
   
   @Input() servicos: ServicoModel[];// = [];//matriz de serviços pretados
-  headElements = ['Serviço', 'Opçoes'];
+  headElements = ['', 'Serviço',];
   constructor() { }
 
   ngOnInit(): void {
   }
-
+  isempty():boolean{
+    return this.servicos.length < 1 ? true : false;
+  }
 }

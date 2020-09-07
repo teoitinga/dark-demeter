@@ -3,13 +3,14 @@ import { ApiService } from 'src/app/core/api.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { UsuarioModel } from 'src/app/models/usuario.model';
 import { take } from 'rxjs/operators';
-
+ 
 @Component({
   selector: 'app-cabecalho',
   templateUrl: './cabecalho.component.html',
   styleUrls: ['./cabecalho.component.css']
 })
 export class CabecalhoComponent implements OnInit {
+  isloggedIn = true;
 
   constructor(
     private apiservice: ApiService
@@ -29,6 +30,9 @@ export class CabecalhoComponent implements OnInit {
     });
 
   }
+  isloggedInVerify(){
+    this.isloggedIn = this.apiservice.isLoggedIn();
+  }
   get roletecnico(): Observable<boolean> {
     return new Observable<boolean>(observer => {
       observer.next(this.apiservice.roletecnico);
@@ -40,4 +44,5 @@ export class CabecalhoComponent implements OnInit {
       observer.next(this.apiservice.rolecedido);
     });
   }
+
 }

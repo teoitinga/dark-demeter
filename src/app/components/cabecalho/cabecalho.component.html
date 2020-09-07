@@ -23,18 +23,19 @@
       </li>
       <!-- Dropdown -->
       <li class="nav-item dropdown" dropdown>
-        <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+        <a *ngIf = "rolecedido | async" dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
           Atendimentos<span class="caret"></span></a>
         <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
-          <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/atendimento/register']">Registrar</a>
-          <a class="dropdown-item waves-light" mdbWavesEffect href="#">Modificar valores</a>
-          <a class="dropdown-item waves-light" mdbWavesEffect href="#">Modificar status</a>
-          <a class="dropdown-item waves-light" mdbWavesEffect href="#">Encaminhar</a>
-          <div class="divider dropdown-divider"></div>
-          <a class="dropdown-item waves-light" mdbWavesEffect href="#">Anexar arquivo</a>
+          <a *ngIf = "rolecedido | async" class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/atendimento/register']">Registrar</a>
+          <a *ngIf = "rolecedido | async" class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/atendimento']">Lista</a>
+          <a *ngIf = "roletecnico | async" class="dropdown-item waves-light" mdbWavesEffect href="">Modificar valores</a>
+          <a *ngIf = "roletecnico | async" class="dropdown-item waves-light" mdbWavesEffect href="">Modificar status</a>
+          <a *ngIf = "roletecnico | async" class="dropdown-item waves-light" mdbWavesEffect href="">Encaminhar</a>
+          <div *ngIf = "roletecnico | async" class="divider dropdown-divider"></div>
+          <a *ngIf = "roletecnico | async" class="dropdown-item waves-light" mdbWavesEffect href="">Anexar arquivo</a>
         </div>
       </li>
-
+ 
       <li class="nav-item" (click)="logout()">
         <a class="nav-link waves-light" mdbWavesEffect>
             Usuário: {{usuario.value?.nome}}

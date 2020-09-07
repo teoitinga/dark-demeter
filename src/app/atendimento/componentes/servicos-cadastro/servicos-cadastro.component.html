@@ -3,11 +3,12 @@
     <div class="datepicker">
       <mat-form-field class="example-full-width" appearance="">
         <mat-label>Data do atendimento:</mat-label>
-        <input matInput [matDatepickerFilter]="myFilter" [min]="minDate" [max]="maxDate" [matDatepicker]="picker" formControlName="dataAtendimento">
+        <input matInput [matDatepickerFilter]="myFilter" [min]="minDate" [max]="maxDate" [matDatepicker]="picker"
+          formControlName="dataAtendimento" disabled>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
+        <mat-datepicker #picker disabled="false"></mat-datepicker>
       </mat-form-field>
-      
+
     </div>
     <div class="options">
       <mat-checkbox color='primary' formControlName="createFolder"> - Criar pasta para este atendimento</mat-checkbox>
@@ -56,22 +57,24 @@
   <div class="container-lg z-depth-1 container orientacoes md-form">
     <!--Textarea with icon prefix-->
     <mdb-icon fas icon="pencil-alt" class="prefix"></mdb-icon>
-    <textarea type="text" id="orientacoes" formControlName="recomendacoes" class="md-textarea form-control" mdbInput></textarea>
+    <textarea type="text" id="orientacoes" formControlName="recomendacoes" class="md-textarea form-control"
+      mdbInput></textarea>
     <label for="orientacoes">Orientações:</label>
   </div>
 
-
-  <div>
-    <button (click)="registraAtendimento()" mdbBtn type="button" color="success"
-      mdbWavesEffect>Enviar dados</button>
+  <div class="container-lg z-depth-1 container orientacoes md-form">
+    <button (click)="registraAtendimento()" [disabled]="formInvalid()" mdbBtn type="button" color="success" mdbWavesEffect>Enviar dados</button>
   </div>
-  <div>
-    <button [disabled]="!formServico.valid" (click)="clearServices()" mdbBtn type="button" color="success"
-      mdbWavesEffect>Exclui Atendimentos</button>
-  </div>
-
 </form>
-
-
-<servicos-list [servicos]="servicos"></servicos-list>
-<lista-produtores [produtores]="produtores"></lista-produtores>
+<div class="container-lg z-depth-1 container orientacoes md-form listas">
+  <div class="produtores-list">
+    <button [disabled]="!formServico.valid" (click)="clearProdutores()" mdbBtn type="button" color="warning"
+      mdbWavesEffect>Excluir todos Produtores</button>
+    <lista-produtores [produtores]="produtores"></lista-produtores>
+  </div>
+  <div class="servicos-list">
+    <button [disabled]="!formServico.valid" (click)="clearServices()" mdbBtn type="button" color="warning"
+      mdbWavesEffect>Exclui todos Atendimentos</button>
+    <servicos-list [servicos]="servicos"></servicos-list>
+  </div>
+</div>

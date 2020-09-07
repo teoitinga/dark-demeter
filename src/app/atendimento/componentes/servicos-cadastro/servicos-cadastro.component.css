@@ -58,3 +58,10 @@
     height: 30px;
     background-image: linear-gradient(rgba(211, 195, 195, 0.966), rgb(248, 248, 178));
 }
+.listas{
+    display: flex;
+    flex-direction: column;
+}
+.listas div{
+    width: 100%;
+}

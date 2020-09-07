@@ -46,7 +46,7 @@ export class ApiService {
 
   }
 
-  registerToken(token: string) {                            
+  registerToken(token: string) {
     window.localStorage.setItem(AppUtils.TOKEN, token);
     this.usuario.next(this.jwtDecode(this.getAccessToken()))
   }
@@ -78,34 +78,32 @@ export class ApiService {
     window.localStorage.removeItem(AppUtils.TOKEN);
     this.usuario.next(this.jwtDecode(this.getAccessToken()))
     this.vaiParaPaginaPrincipal();
+    this.route.navigate(['/']);
   }
   get roleadmin(): boolean {
     try {
       if (this.jwtDecode(this.getAccessToken()).role === 'ADMIN') {
         return true;
-      } else {
-        this.vaiParaPaginaPrincipal();
-        return false;
       }
 
     } catch (err) {
-      this.vaiParaPaginaPrincipal();
-      return false;
     }
+    this.vaiParaPaginaPrincipal();
+    return false;
   }
   get roletecnico(): boolean {
     try {
       if (this.jwtDecode(this.getAccessToken()).role === 'TECNICO') {
         return true;
-      } else {
-        this.vaiParaPaginaPrincipal();
-        return false;
+      }
+      if (this.jwtDecode(this.getAccessToken()).role === 'ADMIN') {
+        return true;
       }
 
     } catch (err) {
-      this.vaiParaPaginaPrincipal();
-      return false;
     }
+    this.vaiParaPaginaPrincipal();
+    return false;
 
 
   }
@@ -113,20 +111,23 @@ export class ApiService {
   get rolecedido(): boolean {
 
     try {
+      if (this.jwtDecode(this.getAccessToken()).role === 'ADMIN') {
+        return true;
+      }
+      if (this.jwtDecode(this.getAccessToken()).role === 'TECNICO') {
+        return true;
+      }
       if (this.jwtDecode(this.getAccessToken()).role === 'CEDIDO') {
         return true;
-      } else {
-        this.vaiParaPaginaPrincipal();
-        return false;
       }
 
     } catch (err) {
-      this.vaiParaPaginaPrincipal()
-      return false;
     }
+    this.vaiParaPaginaPrincipal()
+    return false;
 
   }
-  vaiParaPaginaPrincipal(){
+  vaiParaPaginaPrincipal() {
     //this.route.navigate(['/']);
   }
 }

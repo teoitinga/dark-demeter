@@ -9,6 +9,8 @@ import { ServicoPostModel } from '../../models/servico-post.model';
 import { TecnicoModel } from '../../models/tecnicos.models';
 import * as _moment from 'moment';
 import { AtedimentoService } from '../../atedimento.service';
+import { MessageService } from 'src/app/core/message.service';
+import { Router } from '@angular/router';
 
 // See the Moment.js docs for the meaning of these formats:
 // https://momentjs.com/docs/#/displaying/format/
@@ -60,7 +62,9 @@ export class ServicosCadastroComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private atedimentoService: AtedimentoService
+    private atedimentoService: AtedimentoService,
+    private messageService: MessageService,
+    private router: Router
   ) {
     //Configura a data mínima para 01 de janeiro do ano corrente e a maior data, 20 de dezembro do ano atual
     const currentYear = new Date().getFullYear();
@@ -94,41 +98,94 @@ export class ServicosCadastroComponent implements OnInit {
       valorDoProjeto: ['0'],
       createFolder: ['true'],
       recomendacoes: [''],
-      dataAtendimento: [_moment([2017, 0, 1])]
+      dataAtendimento: [{value: _moment().format('DD/MM/YYYY') }, [Validators.required]]
     });
   }
   atualizaFormulario() {
     this.formServico.patchValue({
-      descricao: [this.servico.descricao],
+      descricao: this.servico.descricao,
       tempoNecessario: [_moment().add(this.servico.tempoNecessario, 'days').format('DD/MM/YYYY')],
-      valorDoDae: [this.servico.valorReferencia]
+      valorDoDae: this.servico.valorReferencia
     });
   }
-  registraAtendimento() {
-    if (this.produtores.length > 0 && this.servicos.length > 0) {
-      this.registro = new AtendimentoModel();
-      this.registro.produtorInfo = this.produtores;
-      this.registro.tipoServico = this.servicos;
-      this.registro.recomendacoes = this.formServico.controls['recomendacoes'].value;
+  atualizaFieldConclusao() {
+    this.formServico.patchValue({
+      tempoNecessario: [_moment().add(this.servico.tempoNecessario, 'days').format('DD/MM/YYYY')],
+    });
+  }
+  formInvalid(): boolean {
+    if (this.produtores.length < 1) {
 
-      this.registro.createFolder = this.formServico.controls['createFolder'].value;
-      this.registro.dataDoAtendimento = this.formServico.controls['dataAtendimento'].value;
-      this.registro.responsavel = this.tecnico.cpf;
+      return true;
+    }
+    if (this.servicos.length < 1) {
+      return true;
 
-      console.log('Atendimentos registrados: ' + JSON.stringify(this.registro));
-      this.atedimentoService.sendAtendimentos(this.registro).subscribe(
-        data=>{
-          console.info("Sucesso: ")
+    }
+    if (!this.tecnico) {
+      return true;
 
-        },
-        err=>{
-          console.error("Erro: " + err)
-        }
-      );
+    }
+    if (this.formServico.controls['dataAtendimento'].value == '') {
+      return true;
+
     }
   }
+  registraAtendimento() {
+    if (this.produtores.length < 1) {
+      this.messageService.showError('Erro!', 'Deve haver pelo menos 01 produtor selecionado.');
+      return;
+    }
+    if (this.servicos.length < 1) {
+      this.messageService.showError('Erro!', 'Deve haver pelo menos 01 serviço registrado.');
+      return;
+    }
+    if (!this.tecnico) {
+      this.messageService.showError('Erro!', 'Você deve definir o responsável pelo serviço.');
+      return;
+    }
+    if (this.formServico.controls['dataAtendimento'].value == '') {
+      this.messageService.showError('Erro!', 'Você deve definir a data do atendimento.');
+      return;
+    }
+
+    this.registro = new AtendimentoModel();
+    this.registro.produtorInfo = this.produtores;
+    this.registro.tipoServico = this.servicos;
+    this.registro.recomendacoes = this.formServico.controls['recomendacoes'].value;
+    this.registro.createFolder = this.formServico.controls['createFolder'].value;
+    this.registro.dataDoAtendimento = this.formatDateView(this.formatDateAPI(this.formServico.controls['dataAtendimento'].value));
+    this.registro.responsavel = this.tecnico.cpf;
+
+    //console.log('Atendimentos registrados: ' + JSON.stringify(this.registro));
+    this.atedimentoService.sendAtendimentos(this.registro).subscribe(
+      data => {
+        this.messageService.showSuccess('Registrado!', 'Atendimento registrado com sucesso.');
+        this.router.navigate(['/atendimento']);
+      },
+      err => {
+        this.messageService.showError('Erro! - Atendimento não foi registrado.', err.err);
+      }
+    );
+
+
+  }
+  formatDateAPI(date: string): string {
+    let data: _moment.Moment = _moment.utc(date).local();
+    return data.format('DDMMYYYY');
+  }
+  formatDateView(date: string): string {
+    let data: _moment.Moment = _moment.utc(date).local();
+    return data.format('DD/MM/YYYY');
+  }
   incluirServico() {
-    console.log('incluindo servico');
+    //console.log('incluindo servico');
+    //let data =  this.formServico.controls['dataAtendimento'].value;
+    let data: _moment.Moment = _moment.utc(this.formServico.controls['dataAtendimento'].value).local();
+
+    //console.log('Data do atendimento: ' + data.format("DD/MM/YYYY"));
+    //console.log('Data do atendimento iew : ' + this.formatDateView(this.formServico.controls['dataAtendimento'].value));
+    //console.log('Data do atendimento api: ' + this.formatDateAPI(this.formServico.controls['dataAtendimento'].value));
     try {
       if (this.servico.legenda) {
         this.atendimento = this.formServico.value;
@@ -145,7 +202,7 @@ export class ServicosCadastroComponent implements OnInit {
         this.servicoAtd.valorDoDae = this.formServico.controls['valorDoDae'].value;
 
         this.servicos.push(this.servicoAtd);
-        console.log('Matriz de serviços: ' + JSON.stringify(this.servicos));
+        //console.log('Matriz de serviços: ' + JSON.stringify(this.servicos));
       }
 
     } catch (err) {

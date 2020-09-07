@@ -1,12 +1,12 @@
-<table mdbTable>
+<p *ngIf="isempty()"> Não há serviços selecionados!</p>
+<table *ngIf="!isempty()">
     <thead>
       <tr>
         <th *ngFor="let head of headElements" scope="col">{{head}} </th>
       </tr>
     </thead>
     <tbody>
-      <tr mdbTableCol *ngFor="let servico of servicos">
-        <th scope="row"></th>
+      <tr *ngFor="let servico of servicos">
         <td>
             <mdb-icon fas icon="calendar-times"></mdb-icon>
         </td>

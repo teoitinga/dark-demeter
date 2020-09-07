@@ -1,14 +1,13 @@
-<p>lista-produtores works!</p>
-<table mdbTable>
+<p *ngIf="isempty()"> Não há produtores selecionados!</p>
+<table *ngIf="!isempty()">
     <thead>
       <tr>
         <th *ngFor="let head of headElements" scope="col">{{head}} </th>
       </tr>
     </thead>
     <tbody>
-      <tr mdbTableCol *ngFor="let produtor of produtores">
-        <th scope="row"></th>
-        <td>
+      <tr *ngFor="let produtor of produtores">
+        <td class="col-icon">
             <mdb-icon fas icon="calendar-times"></mdb-icon>
         </td>
         <td>{{produtor.nome}}</td>

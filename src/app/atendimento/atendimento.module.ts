@@ -26,6 +26,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 // MDB Angular Free
 import { InputsModule, WavesModule, ButtonsModule } from 'angular-bootstrap-md';
 import { ListaProdutoresComponent } from './componentes/lista-produtores/lista-produtores.component'
+import { MessageService } from '../core/message.service';
+
 @NgModule({
   declarations: [
     AtendimentoListComponent,
@@ -61,7 +63,8 @@ import { ListaProdutoresComponent } from './componentes/lista-produtores/lista-p
     AtedimentoService,
     ApiService,
     MatNativeDateModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MessageService
   ]
 
 })
