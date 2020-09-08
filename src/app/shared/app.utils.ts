@@ -1,5 +1,5 @@
 import { HttpHeaders } from '@angular/common/http';
-export const BASE_URL = 'http://localhost:4200/api/v1/';
+export const BASE_URL = 'http://192.168.0.105:4200/api/v1/';
 export const TOKEN = "token";
 
 //URL para autenticação de usuários
