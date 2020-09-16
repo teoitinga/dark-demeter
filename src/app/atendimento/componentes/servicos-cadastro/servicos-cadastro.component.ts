@@ -154,10 +154,11 @@ export class ServicosCadastroComponent implements OnInit {
     this.registro.tipoServico = this.servicos;
     this.registro.recomendacoes = this.formServico.controls['recomendacoes'].value;
     this.registro.createFolder = this.formServico.controls['createFolder'].value;
-    this.registro.dataDoAtendimento = this.formatDateView(this.formatDateAPI(this.formServico.controls['dataAtendimento'].value));
+    
+    this.registro.dataDoAtendimento = this.formatDateAPI(this.formServico.controls['dataAtendimento'].value);
+    
     this.registro.responsavel = this.tecnico.cpf;
 
-    //console.log('Atendimentos registrados: ' + JSON.stringify(this.registro));
     this.atedimentoService.sendAtendimentos(this.registro).subscribe(
       data => {
         this.messageService.showSuccess('Registrado!', 'Atendimento registrado com sucesso.');
